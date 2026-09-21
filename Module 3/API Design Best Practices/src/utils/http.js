@@ -1,22 +1,57 @@
-function sendList(res, rows) {
-  return res.status(200).json(rows);
+// function sendList(res, rows, meta) {
+//   return res.status(200).json({
+//     data: rows,
+//     meta
+//   });
+// }
+
+// function sendCreated(res, post) {
+//   return res.status(201).json({
+//     data: post
+//   });
+// }
+
+// function sendOk(res, payload) {
+//   return res.status(200).json({
+//     data: payload
+//   });
+// }
+
+// function sendError(res, status, code, message, details) {
+//   const error = {
+//     code,
+//     message
+//   };
+
+//   if (details) {
+//     error.details = details;
+//   }
+
+//   return res.status(status).json({
+//     error
+//   });
+// }
+
+// module.exports = {
+//   sendList,
+//   sendCreated,
+//   sendOk,
+//   sendError
+// };
+
+function sendSuccess(res, status, data, meta) {
+  const body = { success: true, data };
+  if (meta !== undefined) body.meta = meta;
+  return res.status(status).json(body);
 }
 
-function sendCreated(res, post) {
-  return res.status(200).json({ post });
-}
-
-function sendOk(res, payload) {
-  return res.status(200).json(payload);
-}
-
-function sendError(res, status, payload) {
-  return res.status(status).json(payload);
+function sendError(res, status, code, message, details) {
+  const error = { code, message };
+  if (details !== undefined) error.details = details;
+  return res.status(status).json({ success: false, error });
 }
 
 module.exports = {
-  sendList,
-  sendCreated,
-  sendOk,
+  sendSuccess,
   sendError
 };
